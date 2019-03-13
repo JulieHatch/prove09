@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="stylesheets/simple.css?v=1">
+    <title>Mail Rate Calculator</title>
+	<script>
+		function validate(){
+			var tof = 0;
+			if (isEmptyWeight()==false){
+				tof=1;
+			}
+			if (tof == 0)
+				return true;
+			else
+				return false;
+		}
+		function isEmptyWeight() {
+		var type = document.getElementById('mType').value;
+		var weight = parseFloat(document.getElementById('Weight').value);
+			if (document.getElementById("Weight").value == '') {
+				document.getElementById("iWeight").style.color = 'red';
+				return false;
+			}
+			else if (weight > 0 && weight <= 13){
+				if (type =="stamped" || type =="metered"){
+					if ( weight <= 3.5){
+						document.getElementById("iWeight").innerHTML = "Weight: ";
+						document.getElementById("iWeight").style.color = 'black';
+						return true;
+					}
+					else {
+						document.getElementById("iWeight").innerHTML = 
+						"Weight: (Your Weight must be between 1 and 3.5)";
+						document.getElementById("iWeight").style.color = 'red';
+						return false;
+					}
+				}
+				else {
+					document.getElementById("iWeight").innerHTML = "Weight: ";
+					document.getElementById("iWeight").style.color = 'black';
+					return true;
+				}
+			}
+			else {
+				if (type =="stamped"|| type =="metered"){
+				document.getElementById("iWeight").innerHTML = 
+				"Weight: (Your weight must be between 1 and 3.5)";
+				}
+				if (type =="flats" || type =="retail"){
+				document.getElementById("iWeight").innerHTML = 
+				"Weight: (Your weight must be between 1 and 13)";
+				}
+				document.getElementById("iWeight").style.color = 'red';
+				return false;
+			}
+		}
+		</script>
+</head>
+<body>
+    <h1 style="text-align:center">Mail Rate Calculator</h1>
+	<div class="boxBig"style="margin:auto; text-align:auto;"><div class="box">
+	Please be aware that the text field needs to be filled in with correct input.
+	If you are unaware of what your weight is please weigh it so that you are not
+	suprised if it is not the correct weight.<br>
+	<br><br><b>Please Enter Your Mail's Weight and Type:</b>
+    <form onsubmit="return validate()" action="getRate" method="get">
+		<br>
+		
+        Mail Type:
+        <select id="mType" name="type" onchange="isEmptyWeight()">
+            <option value="stamped">Letters (Stamped)</option>
+			<option value="metered">Letters (Metered)</option>
+            <option value="flats">Large Envelopes (Flats)</option>
+            <option value="retail">First-Class Package Service—Retail</option>
+        </select>*
+        <br><span id="iWeight">Weight:</span>
+		<input type="text" id="Weight" name="weight" onblur="isEmptyWeight()"></input><br><br>
+        <input type="submit" value="Calculate">
+    </form><br>
+	<br><span style="font-size: 70%">*If you select "First-Class Package Service—Retail"
+	for mail type, be aware that the parcels are only calculated for zones 1 and 2.</span>
+	</div></div>
+</body>
+</html>
